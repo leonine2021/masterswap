@@ -57,7 +57,7 @@ const data1 = {
 	],
 };
 
-function Content() {
+function Content(props) {
 	return (
 		<div className={styles.contentcontainer}>
 			<div className={styles.contentwrapper}>

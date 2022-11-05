@@ -254,3 +254,109 @@ charts css started  */
     }
 
 }
+
+/* checkout form */
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 32px;
+
+    position: absolute;
+    width: 421px;
+    height: 670px;
+    left: 842px;
+    top: 103px;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 8px;
+
+    width: 421px;
+    height: 70px;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 2;
+    flex-grow: 0;
+}
+
+.input-label {
+    width: 421px;
+    height: 22px;
+
+    font-family: 'SF Pro Display';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    /* identical to box height, or 157% */
+
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.005em;
+    font-feature-settings: 'pnum' on, 'lnum' on;
+
+    /* text/text-gray */
+
+    color: #697386;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.forminput {
+    /* Auto layout */
+    display: flex;
+    padding: 9px 12px;
+
+    width: 421px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid rgba(60, 66, 87, 0.12);
+    /* shadow-small */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08), 0px 1px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+}
+
+.forminput1 {
+    /* Auto layout */
+    padding: 9px 12px;
+    max-width: 50%;
+    height: 40px;
+
+    /* white */
+
+    background: #FFFFFF;
+    /* border-color */
+
+    border: 1px solid rgba(60, 66, 87, 0.12);
+    /* shadow-small */
+
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.08), 0px 1px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    align-self: stretch;
+    flex-grow: 0;
+}
+
+.container1 {
+    max-width: 60%;
+}

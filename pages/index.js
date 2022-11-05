@@ -6,18 +6,18 @@ import Header from "./components/Header";
 import LeftNavbar from "./components/LeftNavbar";
 
 export default function Home() {
-	return (
-		<div className={styles.container}>
-			<Head>
-				<title>Create dashboard</title>
-				<meta name="description" content="Created by streamline" />
-				<link rel="icon" href="/pro.ico" />
-			</Head>
-			<div className={styles.container}>
-				<LeftNavbar />
-				<Header />
-				<Content />
-			</div>
-		</div>
-	);
+  return (
+    <div className={styles.container}>
+      <Head>
+        <title>Masterswap</title>
+        <meta name="description" content="Created by streamline" />
+        <link rel="icon" href="/pro.ico" />
+      </Head>
+      <div className={styles.container}>
+        <LeftNavbar />
+        <Header />
+        <Content />
+      </div>
+    </div>
+  );
 }
