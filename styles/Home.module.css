@@ -172,6 +172,53 @@ content of dashboard start */
     box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0.75);
 }
 
+.card {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    height: 250px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0);
+    border: 1px solid black;
+}
+
+.cardHover{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    height: 250px;
+    background-color: #00ff;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0);
+    border: 1px solid black;
+}
+
+.cardHoverButton {
+    display: flex;
+    width: 150px;
+    height: 50px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0);
+    border: 1px solid black;
+}
+
+.cardHeader {
+    padding-left: 10px;
+    padding-top: 5px;
+    font-size: 25px;
+}
+
+.cardBodyName {
+    padding-top: 80px;
+    padding-left: 10px;
+    color: black;
+}
+
 
 .categories>h2 {
     color: rgb(70, 105, 70);

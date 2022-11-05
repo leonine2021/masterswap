@@ -14,7 +14,7 @@ function LeftNavbar() {
 	return (
 		<div className={styles.navcontainer}>
 			<div className={styles.logo}>
-				<h2>Streamline</h2>
+				<h2>Citi</h2>
 			</div>
 			<div className={styles.wrapper}>
 				<ul>
@@ -30,7 +30,7 @@ function LeftNavbar() {
 							icon={faRocket}
 							style={{ width: "18px", cursor: "pointer" }}
 						/>{" "} */}
-						<a href="#">Explore</a>
+						<a href="#">Crypto Link</a>
 					</li>
 					<li>
 						{/* <FontAwesomeIcon
