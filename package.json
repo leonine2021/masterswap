@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "@heroicons/react": "^1.0.6",
+    "@uniswap/v3-sdk": "^3.9.0",
+    "dotenv": "^16.0.3",
     "eslint": "8.26.0",
     "eslint-config-next": "13.0.2",
     "next": "13.0.2",
