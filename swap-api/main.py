@@ -45,49 +45,27 @@ user_table = Table(
 
 Base = declarative_base()
 
-class MasterPay(Base):
-    __tablename__ = "MasterPay_Customers"
-    id = Column(Integer, primary_key=True)
-    cchash = Column(String(30))
-    wallet_address = Column(String)
-    currency = Column(String)
-   
-    def __repr__(self):
-        return f"MasterPay_Customers(id={self.id!r}, cchash={self.cchash!r}, wallet_address={self.wallet_address!r}, currency={self.currency!r})"
-
 class Payment(Base):
 
     __tablename__ = "Payments"
     id = Column(Integer, primary_key=True)
+    wallet_address = Column(String(30)) # users identifier
     cchash = Column(String(30))
-    dollaramount = Column(String)
-    merchant = Column(String)
+    dollaramount = Column(String) # amount in USD
+    merchant = Column(String) # the address of the merchant
+    currency = Column(String) # the currency that the user is trading
     def __repr__(self):
-        return f"Payment(id={self.id!r}, cchash={self.cchash!r}, wallet_address={self.dollaramount!r}, merchant={self.merchant!r})"
+        return f"Payment(id={self.id!r}, cchash={self.cchash!r}, wallet_address={self.wallet_address!r}, dollaramount={self.dollaramount!r}, merchant={self.merchant!r}, currency={self.currency!r} )"
 
-class User(Base):
-    __tablename__ = "user_account"
+class Customer(Base):
+    __tablename__ = "Customer"
     id = Column(Integer, primary_key=True)
-    name = Column(String(30))
-    fullname = Column(String)
-    addresses = relationship(
-        "Address", back_populates="user", cascade="all, delete-orphan"
-    )
+    cchash = Column(String(30))
+    wallet_address = Column(String)
     def __repr__(self):
-        return f"User(id={self.id!r}, name={self.name!r}, fullname={self.fullname!r})"
-
-
-class Address(Base):
-    __tablename__ = "address"
-    id = Column(Integer, primary_key=True)
-    email_address = Column(String, nullable=False)
-    user_id = Column(Integer, ForeignKey("user_account.id"), nullable=False)
-    user = relationship("User", back_populates="addresses")
-    def __repr__(self):
-        return f"Address(id={self.id!r}, email_address={self.email_address!r})"
+        return f"User(id={self.id!r}, cchash={self.cchash!r}, wallet_address={self.wallet_address!r})"
 
 DATABASE_URL = "sqlite:///./test.db"
-
 
 engine = create_engine("sqlite://", echo=True, future=True)
 
@@ -99,6 +77,26 @@ def test(Payment):
         session.add_all([Payment,])
         session.commit()
 
+def register_customer_to_db(Customer):
+    with Session(engine) as session:
+        session.add_all([Customer])
+        session.commit()
+
+
+
+# def validateCustomer(cchash):
+#     with Session(engine, future=True) as session:
+#         return session.
+    #     stmt = (
+    #         select(Customer)
+    #         .where(Customer.cchash == cchash)
+    #     )
+
+    # result = session.execute(stmt)
+
+
+    # print(result.first)
+
 
 
 
@@ -108,13 +106,17 @@ tester = Payment(
             cchash="1111222233334444",
             dollaramount="1500.00",
             merchant="0x122123434323432434234324343243423432432423432432",
+            wallet_address="0x122123434323432434234324343243423432432423432499",
+            currency="ETH"
         )
 
-def get_payment(card, amount, to):
+def get_payment(card, amount, to, currency, walletAddress ):
     payment = Payment(
             cchash=card,
             dollaramount=amount,
             merchant=to,
+            currency=currency,
+            wallet_address=walletAddress,
         )
     return payment
 
@@ -125,25 +127,22 @@ class Payment(BaseModel):
     cchash: str 
     dollaramount: str 
     merchant: str
+    wallet_address: str
+    currency: str
 
+class Customer(BaseModel):
+    cchash: str 
+    wallet_address: str
 
-def hashcc(number, expiry, sec_code):
-
-    a = hash(number)
-    b = hash(expiry)
-    c = hash(sec_code)
-
-    d = a + b + c 
-
-    return d
     
-@app.get("/")
-async def root():
+@app.get("/customers/{{ccash}}")
+async def get_customer():
+    # validateCustomer("123")
     return {"message": "Hello World"}
 
-@app.post("/cardhash")
-async def root():
-    return {"message": "Hello World"}
+@app.post("/customers", status_code=201)
+async def create_customer(customer : Customer):
+    return {"message": "Customer was successfully registered."}
 
 
 @app.put("/mastercheckout/", status_code=200)
