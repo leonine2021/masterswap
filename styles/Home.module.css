@@ -43,9 +43,10 @@
 }
 
 .wrapper>ul>li>a:hover {
-    color: darkgoldenrod;
+    color: rgb(255, 89, 0);
     font-size: 22px;
     transition: 0.2s;
+    opacity: 1;
 }
 
 @media only screen and (max-width: 768px) {
@@ -150,12 +151,14 @@ content of dashboard start */
 
 .contentcontainer {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
-    margin-left: 200px;
 }
 
 .contentwrapper {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     padding: 20px;
     gap: 40px;
 }
@@ -163,8 +166,7 @@ content of dashboard start */
 .tabs {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    padding-top: 20px;
+    justify-content: space-between;
     width: 20%;
     height: 500px;
     background-color: rgb(255, 255, 255);
@@ -172,34 +174,6 @@ content of dashboard start */
     cursor: pointer;
     box-shadow: 3px 6px 6px 10px rgba(246, 246, 246, 1);
 }
-
-/* .card1 {
-    display: flex;
-    align-items: center;
-    width: 400px;
-    height: 250px;
-    background-color: #ffffff;
-    background-image: url('/Card-1.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0);
-} */
-
-/* .card2 {
-    display: flex;
-    align-items: center;
-    width: 400px;
-    height: 250px;
-    background-color: #ffffff;
-    background-image: url('/Card-2.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-    cursor: pointer;
-    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0);
-} */
 
 .cardButton {
     display: flex;

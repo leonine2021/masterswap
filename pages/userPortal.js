@@ -5,7 +5,7 @@ import Info from "./components/Info";
 import Header from "./components/Header";
 import LeftNavbar from "./components/LeftNavbar";
 
-const menuList = ['Dashboard', 'Cards', 'Analytics', 'Support', 'Log Out']
+const menuList = ['Dashboard', 'Cards', 'Analytics', 'Settings', 'Support', 'Log Out']
 
 
 export default function UserPortal() {
@@ -17,7 +17,7 @@ export default function UserPortal() {
         <link rel="icon" href="/pro.ico" />
       </Head>
       <div className={styles.container}>
-        <LeftNavbar header={'MASTERSWAP'} menuList={menuList} />
+        <LeftNavbar header={'MASTERSWAP'} menuList={menuList} mastercard={true} />
         <Header userName={'Alice'} span={'Connect Your Bank Account to Wallet'} />
         <Info />
       </div>

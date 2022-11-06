@@ -12,11 +12,9 @@ function Header(props) {
 					</h2>
 					<p>{props.span}</p>
 				</div>
-				{/* <div className={styles.profile}>
-					<img src={Image} alt="profile" className={styles.image} />
-				</div> */}
 			</div>
 		</div>
+
 	);
 }
 

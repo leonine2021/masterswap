@@ -5,16 +5,26 @@ function LeftNavbar(props) {
 	return (
 		<div className={styles.navcontainer}>
 			<div className={styles.logo}>
+				{props.mastercard && <img src='/mastercard.svg' />}
 				<h2>{props.header}</h2>
 			</div>
 			<div className={styles.wrapper}>
 				<ul>
 					{props.menuList.map((d, i) => {
-						return (
-							<li id={i}>
-								<a href="#">{d}</a>
-							</li>
-						)
+						if (d == 'Dashboard') {
+							return (
+								<li className='text-orange-600' id={i}>
+									<a href="#">{d}</a>
+								</li>
+							)
+						} else {
+							return (
+								<li id={i}>
+									<a href="#">{d}</a>
+								</li>
+							)
+						}
+
 					})}
 				</ul>
 			</div>

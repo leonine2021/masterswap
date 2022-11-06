@@ -5,7 +5,7 @@ import Content from "./components/Content";
 import Header from "./components/Header";
 import LeftNavbar from "./components/LeftNavbar";
 
-const menuList = ['Dashboard', 'Crypto Link', 'Settings', 'Support', 'Log Out']
+const menuList = ['Dashboard', 'Analytics', 'Settings', 'Support', 'Log Out']
 
 export default function Bank() {
     return (
@@ -16,7 +16,7 @@ export default function Bank() {
                 <link rel="icon" href="/" />
             </Head>
             <div className={styles.container}>
-                <LeftNavbar header={'BANK XYZ'} menuList={menuList} />
+                <LeftNavbar header={'BANK XYZ'} menuList={menuList} mastercard={false} />
                 <Header span={'Select any card to connect to your crypto wallet'} userName={'Alice'} />
                 <Content />
             </div>

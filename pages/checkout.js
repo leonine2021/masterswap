@@ -34,11 +34,25 @@ export default function App() {
 
     return (
         <div className="App">
-            {clientSecret && (
-                <Elements options={options} stripe={stripePromise}>
-                    <CheckoutForm />
-                </Elements>
-            )}
+            <div className='px-[20%] py-[5%] flex justify-around item-center'>
+                <div className='border-r-2 mr-0 pr-10 mt-6'>
+                    <span className="text-3xl mt-6">Checkout</span>
+                    <img className='py-10 pr-3 w-[80%]' src='/tv.jpeg' />
+                    <div className="mt-9">
+                        <span className="text-xl block"><strong>Item:</strong> 98" 4K Smart Google TV</span>
+                        <span className="text-xl block"><strong>Quatity:</strong> 1 </span>
+                        <span className="text-xl block"><strong>Total Price:</strong> $8,499.99 </span>
+                    </div>
+
+                </div>
+
+                {clientSecret && (
+                    <Elements options={options} stripe={stripePromise}>
+                        <CheckoutForm />
+                    </Elements>
+                )}
+            </div>
+
         </div>
     );
 }
