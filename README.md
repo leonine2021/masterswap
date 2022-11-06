@@ -37,6 +37,10 @@ Bank homepage use:
 ```shell
 http://localhost:3000/bank
 ```
+Masterswap Page:
+```shell
+http://localhost:3000/userPortal
+```
 
 Market Checkout page use:
 ```shell
@@ -47,3 +51,6 @@ http://localhost:3000/checkout
 1. If you can't start the application:
 - Check that you npm installed in the root file
 - Try running 'npm install -f'
+
+# Notes About the Code
+Due to limited time, some of the information that we would be gathering through APIs are hard-coded. For instance, the balances on the bank homepage, are currently hard-coded, however, in the future, we would be using a web3 call to obtain the crypto's wallet.
