@@ -10,15 +10,15 @@ const menuList = ['Dashboard', 'Cards', 'Analytics', 'Settings', 'Support', 'Log
 
 export default function UserPortal() {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} >
       <Head>
         <title>Masterswap</title>
         <meta name="description" content="Created by streamline" />
         <link rel="icon" href="/pro.ico" />
       </Head>
-      <div className={styles.container}>
+      <div className={styles.container} >
         <LeftNavbar header={'MASTERSWAP'} menuList={menuList} mastercard={true} />
-        <Header userName={'Alice'} span={'Connect Your Bank Account to Wallet'} />
+        <Header userName={'Alice'} span={'Have a great day!'} />
         <Info />
       </div>
     </div>

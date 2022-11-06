@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "../../styles/Home.module.css";
 const { createHash } = require('crypto');
+import Grid from '@mui/material/Grid';
 
 function hash(string) {
     return createHash('sha256').update(string).digest('hex');
@@ -19,7 +20,6 @@ function Info() {
                 console.log("connecting");
                 // Requests that the user provides an Ethereum address to be identified by. The request causes a MetaMask popup to appear. Read more: https://docs.metamask.io/guide/rpc-api.html#eth-requestaccounts
                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
-                // console.log(accounts[0])
                 setAccount(accounts[0])
                 setMsg(accounts[0].slice(0, 4) + ' **** **** ' + accounts[0].slice(accounts[0].length - 4, accounts[0].length))
 
@@ -40,7 +40,7 @@ function Info() {
     }
 
     const userObject = hash(process.env.BANK_ACCOUNT + process.env.EXP_DATE + process.env.CVC)
-    console.log('hash:', userObject)
+    // console.log('hash:', userObject)
 
     // Example POST method implementation:
     async function createNewUser(url = '/', data = { user: userObject }) {
@@ -67,8 +67,38 @@ function Info() {
     }
 
     return (
-        <div className='px-10% flex justify-center mt-20'>
-            <div className={styles.tabs}>
+        <Grid container spacing={2}
+            sx={{
+                borderRadius: '10px',
+                cursor: 'pointer',
+                marginTop: "50px",
+                marginLeft: "300px",
+                marginRight: "600px",
+                height: "700px",
+                width: "80%",
+                boxShadow: "3px 6px 6px 10px rgba(246, 246, 246, 1)"
+            }}
+        >
+
+            <Grid item xs={8} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-start", marginTop: "10%" }}>
+                <div className="pl-6">
+                    <h1 className='text-2xl text-start pt-6'>Welcome to Masterswap!</h1>
+                </div>
+                <div className="pl-6 pt-6">
+                    <h2>Here you begin journey to a more seamless world.</h2>
+                </div>
+                <div className="pl-6 pt-6">
+                    <h2>Masterswap is a service that allows users to purchase items with cryptocurrency using their debit card.</h2>
+                </div>
+                <div className="pl-6 pt-6">
+                    <h2>Get started by connecting your crypto wallet to your card.</h2>
+                </div>
+                <div className="pl-6 pt-6">
+                    <img src="/mastercard.svg" width='100px' />
+                </div>
+
+            </Grid>
+            <Grid item xs={3} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                 <div>
                     <div className="border-b-2 mx-3">
                         <h1 className='text-2xl text-center pt-6'>User Info</h1>
@@ -79,8 +109,16 @@ function Info() {
                         <h2>Alice Strange</h2>
                     </div>
                     <div className="pl-6 mt-2">
+                        <h2><strong>Bank Name:</strong></h2>
+                        <h2>Bank of America</h2>
+                    </div>
+                    <div className="pl-6 mt-2">
                         <h2><strong>Card Number:</strong></h2>
                         <h2>**** **** **** 4444</h2>
+                    </div>
+                    <div className="pl-6 mt-2">
+                        <h2><strong>Exp Date:</strong></h2>
+                        <h2>05/25</h2>
                     </div>
                 </div>
                 <div>
@@ -109,8 +147,11 @@ function Info() {
                             </span>
                         </button>)}
                 </div>
-            </div>
-        </div>
+            </Grid>
+            <Grid item xs={1}>
+            </Grid>
+
+        </Grid>
     );
 }
 

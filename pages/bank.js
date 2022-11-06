@@ -17,7 +17,7 @@ export default function Bank() {
             </Head>
             <div className={styles.container}>
                 <LeftNavbar header={'BANK XYZ'} menuList={menuList} mastercard={false} />
-                <Header span={'Select any card to connect to your crypto wallet'} userName={'Alice'} />
+                <Header span={'We have recently partnered with Masterswap. You are now able to connect your crypto wallet to your bank card, making it easier for you to purchase items with your desired currency'} userName={'Alice'} />
                 <Content />
             </div>
         </div>

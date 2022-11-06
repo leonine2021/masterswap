@@ -151,7 +151,7 @@ content of dashboard start */
 
 .contentcontainer {
     display: flex;
-    justify-content: center;
+    padding-left: 220px;
     flex-wrap: wrap;
 }
 
@@ -167,13 +167,15 @@ content of dashboard start */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 20%;
-    height: 500px;
+    width: 60%;
+    height: 700px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     cursor: pointer;
     box-shadow: 3px 6px 6px 10px rgba(246, 246, 246, 1);
 }
+
+
 
 .cardButton {
     display: flex;

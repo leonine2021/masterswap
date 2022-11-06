@@ -1,9 +1,6 @@
 {
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/userPortal": "pages/userPortal.js",
-  "/checkout": "pages/checkout.js",
-  "/bank": "pages/bank.js",
-  "/success": "pages/success.js"
+  "/_document": "pages/_document.js",
+  "/userPortal": "pages/userPortal.js"
 }
