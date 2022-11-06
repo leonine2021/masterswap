@@ -175,6 +175,18 @@ content of dashboard start */
     box-shadow: 3px 6px 6px 10px rgba(246, 246, 246, 1);
 }
 
+.tabssuccess {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30%;
+    height: 350px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 3px 6px 6px 10px rgba(246, 246, 246, 1);
+}
+
 
 
 .cardButton {

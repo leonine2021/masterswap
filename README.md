@@ -68,3 +68,7 @@ http://localhost:3000/checkout
 
 - Check that you npm installed in the root file
 - Try running 'npm install -f'
+
+# Notes About the Code
+
+Due to limited time, the balances on the bank homepage are hard-coded, however, in the future, we would be using a web3 call to obtain the crypto's wallet.

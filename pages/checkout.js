@@ -34,6 +34,10 @@ export default function App() {
 
     return (
         <div className="App">
+            <div>
+                <img style={{ height: "50%", position: "relative", marginBottom: "0%" }} src="/samsaung.png" />
+            </div>
+
             <div className='px-[20%] py-[5%] flex justify-around item-center'>
                 <div className='border-r-2 mr-0 pr-10 mt-6'>
                     <span className="text-3xl mt-6">Checkout</span>
