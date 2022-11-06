@@ -93,7 +93,8 @@ function Content() {
 					<div className='bg-slate-100 w-[400px] ml-2 relative rounded-[30px]'>
 						<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
 						<div className="absolute bottom-12 left-6"> USD: $7890.12</div>
-						<div className="absolute bottom-6 left-6">ETH: 4.567</div>
+						<div className="absolute bottom-6 left-6">USDC: 4.567</div>
+						<div className="absolute bottom-0 left-6">MATIC: 2.876</div>
 					</div>
 				</div>
 				<div className="flex justify-center">
@@ -103,7 +104,8 @@ function Content() {
 					<div className='bg-slate-100 w-[400px] ml-2  relative rounded-[30px]'>
 						<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
 						<div className="absolute bottom-12 left-6"> USD: $8765.43</div>
-						<div className="absolute bottom-6 left-6">ETH: 9.876</div>
+						<div className="absolute bottom-6 left-6">MATIC: 2.876</div>
+						<div className="absolute bottom-0 left-6">DAI: 9.876</div>
 					</div>
 				</div>
 			</div>
