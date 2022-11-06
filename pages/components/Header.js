@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../styles/Home.module.css";
 // import Image from "../../images/watermark.png";
 
-function Header() {
+function Header(props) {
 	return (
 		<div className={styles.headcontainer}>
 			<div className={styles.headwrapper}>
