@@ -1,10 +1,11 @@
 const hre = require("hardhat");
-//require('dotenv').config();
+require('dotenv').config();
+
 
 
 class SwapBackend {
 
-    constructor(usdValue){
+    constructor(usdValue, address ){
         this.usdNeeded = usdValue;
     }
 
@@ -27,32 +28,25 @@ class SwapBackend {
     }
 
     wrapETH() {
-        //
+        //Wrap the ETH Here
+        const weth9 = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
+        //Swap Ether Here
+        
     }
-    
+
     beginSwap = async() => {
-        //const tokenAddressSender = this.getIERC20Address();
+        const tokenAddressSender = this.getIERC20Address();
+        
         let whale = await this.createWhale();
         const contractInstance = await hre.ethers.getContractAt('MasterSwap', '0x3D63c50AD04DD5aE394CAB562b7691DD5de7CF6f');
-        contractInstance.swapExactOutputMultihop(1500, 0.8);
-
-        /**
-        //Initiate an Impersonated Account to Mimic Send
-        let whale = await this.createWhale();
-        
-        //Swap WETH for USDC (THis is WETH contract)
+    
+        //Swap WETH for USDC
         let senderTokenInstance = await hre.ethers.getContractAt("IERC20", tokenAddressSender);
 
         // Define How Much ETH needs to be sent
         this.getCurrentPrices(contractInstace);
 
-        // this needs to be different amountIn first needs to be defined
-        let usdcValue = senderTokenInstance.connect(whale).approve(swapExample.address, this.amountIn);
-        
-
-        //Send to Reciever
-        */
-        
+        let usdcValue = senderTokenInstance.connect(whale).approve(swapExample.address, this.amountIn);          
         
     }
 
@@ -63,3 +57,4 @@ class SwapBackend {
 
 let value = new SwapBackend('50');
 value.beginSwap();
+

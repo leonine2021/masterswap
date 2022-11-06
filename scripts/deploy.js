@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
-    const SwapExample = await hre.ethers.getContractFactory("SwapExample");
+    const SwapExample = await hre.ethers.getContractFactory("ZXSWap");
     const swapexample = await SwapExample.deploy();
     console.log(`Deployed to address ${swapexample.address}`);
 }
