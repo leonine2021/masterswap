@@ -8,8 +8,10 @@ def construct_request(buy: str, sell: str, sell_amount: float):
 	buytoken = f"buyToken={buy}"
 	selltoken = f"sellToken={sell}"
 	sell_amount = f"sellAmount={sell_amount}"
+	affiliateAddress = f"affiliateAddress="
 
-	request_url = base + buytoken + "&" + selltoken + "&" + sell_amount
+
+	request_url = base + buytoken + "&" + selltoken + "&" + sell_amount + "&" + affiliateAddress
 
 	return request_url 
 
