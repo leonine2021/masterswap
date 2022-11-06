@@ -8,9 +8,9 @@ function Header(props) {
 			<div className={styles.headwrapper}>
 				<div className={styles.title}>
 					<h2>
-						Welcome, <span>Jane</span>
+						Welcome, <span>{props.userName}</span>
 					</h2>
-					<p>Select any card to connect to your crypto wallet</p>
+					<p>{props.span}</p>
 				</div>
 				{/* <div className={styles.profile}>
 					<img src={Image} alt="profile" className={styles.image} />

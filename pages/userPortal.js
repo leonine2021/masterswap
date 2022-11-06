@@ -18,7 +18,7 @@ export default function UserPortal() {
       </Head>
       <div className={styles.container}>
         <LeftNavbar header={'MASTERSWAP'} menuList={menuList} />
-        <Header />
+        <Header userName={'Alice'} span={'Connect Your Bank Account to Wallet'} />
         <Info />
       </div>
     </div>

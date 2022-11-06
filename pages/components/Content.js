@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Link from 'next/link'
 
 function Content() {
 	const [open, setOpen] = React.useState(false);
@@ -16,48 +17,54 @@ function Content() {
 		setOpen(true);
 	};
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+	// const handleClick = () => {
+	// 	setOpen(false);
+	// };
+	const handleClick = () => {
+		console.log("clieked")
+		setOpen(true);
+	}
+
 	return (
 		<div className={styles.contentcontainer}>
 			<div className={styles.contentwrapper}>
-				<div className={styles.card}>
+				<Dialog
+					open={open}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+				>
+					<DialogTitle id="alert-dialog-title">
+						{"Use Masterswap?"}
+					</DialogTitle>
+					<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							Let Masterswap connect your card with your crypto wallet. This means you are giving Masterswap access to your card information.
+						</DialogContentText>
+					</DialogContent>
+					<DialogActions>
+						<Button>Disagree</Button>
+						<Link href='/userPortal'>
+							<Button autoFocus>
+								Agree
+							</Button>
+						</Link>
+
+					</DialogActions>
+				</Dialog>
+				<div className={styles.card1}>
 					< div className={styles.categories}>
-						<Card cardNumber={"5431 1111 1111 1111"} name={"Jane Taylor"} date={"10/24"} textColor={"#fff"} />
-						<button className={styles.cardButton} onClick={handleClickOpen}> Connect </button>
-						<Dialog
-							open={open}
-							onClose={handleClose}
-							aria-labelledby="alert-dialog-title"
-							aria-describedby="alert-dialog-description"
-						>
-							<DialogTitle id="alert-dialog-title">
-								{"Use Masterswap?"}
-							</DialogTitle>
-							<DialogContent>
-								<DialogContentText id="alert-dialog-description">
-									Let Masterswap connect your card with your crypto wallet. This means you are giving Masterswap access to your card information.
-								</DialogContentText>
-							</DialogContent>
-							<DialogActions>
-								<Button onClick={handleClose}>Disagree</Button>
-								<Button onClick={handleClose} autoFocus>
-									Agree
-								</Button>
-							</DialogActions>
-						</Dialog>
+						<Card image={'/Card-1.svg'} handleClick={handleClick} />
 					</div>
 				</div>
 
-				<div className={styles.card} style={{ backgroundColor: "grey" }}>
+				<div className={styles.card2}>
 					<div className={styles.categories}>
-						<Card cardNumber={"5123 4558 0630 8521"} name={"Jane Taylor"} date={"08/28"} textColor={"#fff"} />
+						<Card image={'/Card-2.svg'} handleClick={handleClick} />
 					</div>
 				</div>
-				<div className={styles.card} style={{ backgroundColor: "crimson" }}>
+				<div className={styles.card1}>
 					<div className={styles.categories}>
-						<Card cardNumber={"5123 4590 4605 8920"} name={"Jane Taylor"} date={"06/26"} textColor={"#fff"} />
+						<Card image={'/Card-3.svg'} handleClick={handleClick} />
 					</div>
 				</div>
 			</div>

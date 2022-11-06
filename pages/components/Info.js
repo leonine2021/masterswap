@@ -76,11 +76,11 @@ function Info() {
                     <br></br>
                     <div className="pl-6">
                         <h2><strong>Name:</strong></h2>
-                        <h2>Alice</h2>
+                        <h2>Alice Strange</h2>
                     </div>
                     <div className="pl-6 mt-2">
                         <h2><strong>Card Number:</strong></h2>
-                        <h2>**** **** **** 1111</h2>
+                        <h2>**** **** **** 4444</h2>
                     </div>
                 </div>
                 <div>

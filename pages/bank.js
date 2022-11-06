@@ -13,11 +13,11 @@ export default function Bank() {
             <Head>
                 <title>Create dashboard</title>
                 <meta name="description" content="Created by streamline" />
-                <link rel="icon" href="/pro.ico" />
+                <link rel="icon" href="/" />
             </Head>
             <div className={styles.container}>
                 <LeftNavbar header={'BANK XYZ'} menuList={menuList} />
-                <Header />
+                <Header span={'Select any card to connect to your crypto wallet'} userName={'Alice'} />
                 <Content />
             </div>
         </div>

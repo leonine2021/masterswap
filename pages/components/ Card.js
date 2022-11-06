@@ -1,18 +1,11 @@
-import React from 'react'
-import styles from "../../styles/Home.module.css";
+import React, { useState } from 'react'
 
-function Card({cardNumber, name, date}) {
+function Card(props) {
+    const [show, setShow] = useState(false);
     return (
-        <div className = "Card">
-            <div className = {styles.cardHeader}>
-                <h1> Mastercard </h1>
-            </div>
-            <div className = {styles.cardBodyName}>
-                <p style={{fontSize:"30px"}}> {cardNumber} </p>
-                <p style={{fontSize:"8px", fontWeight:"bold"}}> VAILD THUR </p>
-                <p style={{fontSize: "15px"}}> {date} </p>
-                <p style={{fontSize: "25px"}}> {name} </p>
-            </div>
+        <div className='relative'>
+            <div className="opacity-0 hover:opacity-100 duration-300 absolute inset-0 flex justify-center items-center text-6xl text-white font-semibold cursor-pointer bg-slate-200 bg-opacity-50 rounded-[30px]" onClick={props.handleClick}>Connect</div>
+            <img src={props.image} width='400px' height='250px' />
         </div>
     )
 }

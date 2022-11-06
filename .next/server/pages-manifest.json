@@ -3,5 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/userPortal": "pages/userPortal.js",
-  "/checkout": "pages/checkout.js"
+  "/checkout": "pages/checkout.js",
+  "/api/create-payment-intent": "pages/api/create-payment-intent.js"
 }
