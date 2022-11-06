@@ -108,7 +108,6 @@ function Content() {
 							<div className="absolute bottom-12 left-6"> USD: $8765.43</div>
 							<div className="absolute bottom-6 left-6 text-purple-800">MATIC: 2.876</div>
 							<div className="absolute bottom-0 left-6 text-purple-800">DAI: 9.876</div>
-
 						</div>
 					</div>
 				</div>

