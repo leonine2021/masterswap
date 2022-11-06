@@ -1,9 +1,7 @@
 {
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/userPortal": "pages/userPortal.js",
+  "/_document": "pages/_document.js",
   "/checkout": "pages/checkout.js",
-  "/bank": "pages/bank.js",
-  "/success": "pages/success.js"
+  "/api/create-payment-intent": "pages/api/create-payment-intent.js"
 }

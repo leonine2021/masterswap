@@ -34,7 +34,11 @@ export default function App() {
 
     return (
         <div className="App">
-            <div className='px-[20%] py-[5%] flex justify-around item-center'>
+             <div>
+                <img style={{height:"50%", position:"relative", marginBottom:"0%"}} src="/samsaung.png"/>
+            </div>
+
+            <div className='px-[20%] py-[0%] flex justify-around item-center' style={{position:"absolute", marginBottom:"100%"}}>
                 <div className='border-r-2 mr-0 pr-10 mt-6'>
                     <span className="text-3xl mt-6">Checkout</span>
                     <img className='py-10 pr-3 w-[80%]' src='/tv.jpeg' />

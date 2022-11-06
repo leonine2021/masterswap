@@ -10,7 +10,7 @@ const menuList = ['Dashboard', 'Cards', 'Analytics', 'Settings', 'Support', 'Log
 
 export default function UserPortal() {
   return (
-    <div className={styles.container}>
+    <div className={styles.userPortalBackground}>
       <Head>
         <title>Masterswap</title>
         <meta name="description" content="Created by streamline" />
@@ -18,7 +18,7 @@ export default function UserPortal() {
       </Head>
       <div className={styles.container}>
         <LeftNavbar header={'MASTERSWAP'} menuList={menuList} mastercard={true} />
-        <Header userName={'Alice'} span={'Connect Your Bank Account to Wallet'} />
+        <Header userName={'Alice'} span={'Welcome to Masterswap! Here you begin your journey to a more seamless world. '} />
         <Info />
       </div>
     </div>
