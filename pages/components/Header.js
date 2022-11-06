@@ -8,7 +8,7 @@ function Header() {
 			<div className={styles.headwrapper}>
 				<div className={styles.title}>
 					<h2>
-						Hello, <span>Jenny</span>
+						Welcome, <span>Jane</span>
 					</h2>
 					<p>Select any card to connect to your crypto wallet</p>
 				</div>

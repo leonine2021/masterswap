@@ -213,6 +213,21 @@ content of dashboard start */
     font-size: 25px;
 }
 
+.popUpHeader {
+    display: flex;
+    width: 400px;
+    height: 250px;
+    background-color: #ffffff;
+    cursor: pointer;
+    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0);
+    border: 1px solid black;
+}
+
+.popUpBody {
+   color: chocolate;
+
+}
+
 .cardBodyName {
     padding-top: 80px;
     padding-left: 10px;
