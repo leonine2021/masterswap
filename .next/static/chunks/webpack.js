@@ -131,7 +131,11 @@
 /******/ 	
 /******/ 	/* webpack/runtime/getFullHash */
 /******/ 	!function() {
+<<<<<<< HEAD
 /******/ 		__webpack_require__.h = function() { return "3d56f71428dc1b79"; }
+=======
+/******/ 		__webpack_require__.h = function() { return "524b096ce364ed40"; }
+>>>>>>> origin/bankPage
 /******/ 	}();
 /******/ 	
 /******/ 	/* webpack/runtime/global */

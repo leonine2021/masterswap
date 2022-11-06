@@ -1,84 +1,63 @@
 import React from "react";
 import styles from "../../styles/Home.module.css";
-// import { Line } from "react-chartjs-2";
-// import { Doughnut } from "react-chartjs-2";
+import Card from "./ Card";
 
-//data for bar chart
-// const data = {
-// 	labels: [
-// 		"January",
-// 		"February",
-// 		"March",
-// 		"April",
-// 		"May",
-// 		"June",
-// 		"July",
-// 		"August",
-// 		"September",
-// 		"October",
-// 		"November",
-// 		"December",
-// 	],
-// 	datasets: [
-// 		{
-// 			label: "Sales/ month",
-// 			fill: true,
-// 			lineTension: 0.1,
-// 			backgroundColor: "rgba(75,192,192,0.4)",
-// 			borderColor: "rgba(75,192,192,1)",
-// 			borderCapStyle: "butt",
-// 			borderDash: [],
-// 			borderDashOffset: 0.0,
-// 			borderJoinStyle: "miter",
-// 			pointBorderColor: "rgba(75,192,192,1)",
-// 			pointBackgroundColor: "#fff",
-// 			pointBorderWidth: 0,
-// 			pointHoverRadius: 0,
-// 			pointHoverBackgroundColor: "rgba(75,192,192,1)",
-// 			pointHoverBorderColor: "rgba(220,220,220,1)",
-// 			pointHoverBorderWidth: 0,
-// 			pointRadius: 0,
-// 			pointHitRadius: 0,
-// 			data: [65, 59, 80, 81, 56, 55, 40, 57, 40, 48, 59, 62],
-// 		},
-// 	],
-// };
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
-//doughnut chart data set
+function Content() {
+	const [open, setOpen] = React.useState(false);
 
-const data1 = {
-	labels: ["Organic", "Social Media", "Websites"],
-	datasets: [
-		{
-			data: [300, 50, 100],
-			backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-			hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-		},
-	],
-};
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
 
-function Content(props) {
+	const handleClose = () => {
+		setOpen(false);
+	};
 	return (
 		<div className={styles.contentcontainer}>
 			<div className={styles.contentwrapper}>
-				<div className={styles.tabs}>
-					<div className={styles.categories}>
-						<h2>Companies</h2>
+				<div className={styles.card}>
+					< div className={styles.categories}>
+						<Card cardNumber={"5431 1111 1111 1111"} name={"Jane Taylor"} date={"10/24"} textColor={"#fff"} />
+						<button className={styles.cardButton} onClick={handleClickOpen}> Connect </button>
+						<Dialog
+							open={open}
+							onClose={handleClose}
+							aria-labelledby="alert-dialog-title"
+							aria-describedby="alert-dialog-description"
+						>
+							<DialogTitle id="alert-dialog-title">
+								{"Use Masterswap?"}
+							</DialogTitle>
+							<DialogContent>
+								<DialogContentText id="alert-dialog-description">
+									Let Masterswap connect your card with your crypto wallet. This means you are giving Masterswap access to your card information.
+								</DialogContentText>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={handleClose}>Disagree</Button>
+								<Button onClick={handleClose} autoFocus>
+									Agree
+								</Button>
+							</DialogActions>
+						</Dialog>
 					</div>
 				</div>
-				<div className={styles.tabs}>
+
+				<div className={styles.card} style={{ backgroundColor: "grey" }}>
 					<div className={styles.categories}>
-						<h2>Customers</h2>
+						<Card cardNumber={"5123 4558 0630 8521"} name={"Jane Taylor"} date={"08/28"} textColor={"#fff"} />
 					</div>
 				</div>
-				<div className={styles.tabs}>
+				<div className={styles.card} style={{ backgroundColor: "crimson" }}>
 					<div className={styles.categories}>
-						<h2>Users</h2>
-					</div>
-				</div>
-				<div className={styles.tabs}>
-					<div className={styles.categories}>
-						<h2>Projects</h2>
+						<Card cardNumber={"5123 4590 4605 8920"} name={"Jane Taylor"} date={"06/26"} textColor={"#fff"} />
 					</div>
 				</div>
 			</div>

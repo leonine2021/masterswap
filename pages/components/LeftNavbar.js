@@ -16,8 +16,6 @@ function LeftNavbar(props) {
 							</li>
 						)
 					})}
-
-
 				</ul>
 			</div>
 		</div>
