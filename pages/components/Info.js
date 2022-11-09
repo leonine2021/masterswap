@@ -58,7 +58,6 @@ function Info() {
 
         const amount = ethers.utils.parseEther('5')
 
-
         const approved = await wethA.connect(signer).approve('0x1f472D2550744f20C13Ac525fa365Ad88317078A', amount)
 
     }
