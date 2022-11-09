@@ -47,3 +47,6 @@ coverage.json
 typechain
 typechain-types
 
+.next/trace
+.next/cache/webpack/client-development/0.pack
+.next/cache/webpack/client-development/index.pack
