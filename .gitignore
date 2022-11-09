@@ -2,7 +2,12 @@
 
 # dependencies
 .node_repl_history
-.next
+
+# next.js
+/.next/
+/out/
+/.idea/
+
 
 # testing
 /coverage
