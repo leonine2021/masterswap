@@ -35,10 +35,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/checkout.js"
     ],
-    "/success": [
+    "/history": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/success.js"
+      "static/chunks/pages/history.js"
     ],
     "/userPortal": [
       "static/chunks/webpack.js",

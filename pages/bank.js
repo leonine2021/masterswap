@@ -5,7 +5,7 @@ import Content from "./components/Content";
 import Header from "./components/Header";
 import LeftNavbar from "./components/LeftNavbar";
 
-const menuList = ['Dashboard', 'Analytics', 'Settings', 'Support', 'Log Out']
+const menuList = ['Dashboard', 'History', 'Analytics', 'Settings', 'Support', 'Log Out']
 
 export default function Bank() {
     return (
