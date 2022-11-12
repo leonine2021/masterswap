@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 const { createHash } = require('crypto');
 import Grid from '@mui/material/Grid';
-const ethers = require('ethers');
+import { ethers } from "ethers";
 
 import Dialog from '@mui/material/Dialog';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
@@ -11,6 +11,7 @@ import Select, { selectClasses } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
 import AddCardIcon from '@mui/icons-material/AddCard';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { orange } from '@mui/material/colors';
 
@@ -48,10 +49,11 @@ const CustomizedInput = styled(InputBase)(({ theme }) => ({
 function Info() {
     const [account, setAccount] = useState('')
     const [msg, setMsg] = useState('No Account Connected')
-    const [finish, setFinish] = useState(false)
-    const [open, setOpen] = React.useState(false);
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [currency, setCurrency] = React.useState('');
+    const [open, setOpen] = useState(false);
+    const [currency, setCurrency] = useState('');
+    const [signed, setSigned] = useState(false)
+    const [rejected, setRejected] = useState(false)
+    const [complete, setComplete] = useState(false)
 
     async function connectWallet() {
         // Check if MetaMask is installed, if it is, try connecting to an account
@@ -62,8 +64,6 @@ function Info() {
                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                 setAccount(accounts[0])
                 setMsg(accounts[0].slice(0, 4) + ' **** **** ' + accounts[0].slice(accounts[0].length - 4, accounts[0].length))
-                // await approveTransfers();
-                setFinish(true)
             } catch (error) {
                 console.log(error);
             }
@@ -79,14 +79,141 @@ function Info() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         await ethereum.request({ method: "eth_requestAccounts" });
         const signer = provider.getSigner();
-        console.log(signer);
-        const wethABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "guy", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "src", "type": "address" }, { "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "wad", "type": "uint256" }], "name": "withdraw", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "deposit", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "guy", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Deposit", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Withdrawal", "type": "event" }];
 
+        const wethABI = [{
+            "constant": true,
+            "inputs": [],
+            "name": "name",
+            "outputs": [{ "name": "", "type": "string" }],
+            "payable": false, "stateMutability": "view", "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [{ "name": "guy", "type": "address" }, { "name": "wad", "type": "uint256" }],
+            "name": "approve",
+            "outputs": [{ "name": "", "type": "bool" }],
+            "payable": false,
+            "stateMutability": "nonpayable", "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "totalSupply",
+            "outputs": [{ "name": "", "type": "uint256" }],
+            "payable": false, "stateMutability": "view", "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [{ "name": "src", "type": "address" }, { "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }],
+            "name": "transferFrom",
+            "outputs": [{ "name": "", "type": "bool" }],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [{ "name": "wad", "type": "uint256" }],
+            "name": "withdraw",
+            "outputs": [],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "decimals",
+            "outputs": [{ "name": "", "type": "uint8" }],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [{ "name": "", "type": "address" }],
+            "name": "balanceOf",
+            "outputs": [{ "name": "", "type": "uint256" }],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [],
+            "name": "symbol",
+            "outputs": [{ "name": "", "type": "string" }],
+            "payable": false,
+            "stateMutability": "view", "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [{ "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }],
+            "name": "transfer",
+            "outputs": [{ "name": "", "type": "bool" }],
+            "payable": false,
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "constant": false,
+            "inputs": [],
+            "name": "deposit",
+            "outputs": [],
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "constant": true,
+            "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }],
+            "name": "allowance",
+            "outputs": [{ "name": "", "type": "uint256" }],
+            "payable": false,
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "payable": true,
+            "stateMutability": "payable",
+            "type": "fallback"
+        },
+        {
+            "anonymous": false,
+            "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "guy", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
+            "name": "Approval", "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
+            "name": "Transfer", "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [{ "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
+            "name": "Deposit",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
+            "name": "Withdrawal",
+            "type": "event"
+        }];
         const wethaddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
         // The Contract object
         const wethA = new ethers.Contract(wethaddress, wethABI, provider);
         const amount = ethers.utils.parseEther('5')
-        await wethA.connect(signer).approve('0x1f472D2550744f20C13Ac525fa365Ad88317078A', amount)
+        await wethA.connect(signer).approve(account, amount).then((result) => {
+            setSigned(true)
+        }).catch((error) => {
+            console.log(error)
+            setRejected(true)
+        })
+    }
+
+    const handleSignApproval = async () => {
+        await approveTransfers()
     }
     // Example POST method implementation:
     // async function createNewUser(url = '/', data = { user: userObject }) {
@@ -109,7 +236,7 @@ function Info() {
 
     const disConnectWallet = () => {
         setAccount('')
-        setMsg('No Account Connected')
+        // setMsg('No Account Connected')
     }
 
     const handleClose = () => {
@@ -120,9 +247,13 @@ function Info() {
         setCurrency(event.target.value);
     };
 
+    const handleConfirm = () => {
+        setComplete(true)
+    }
+
 
     return (
-        <Dialog
+        !complete && <Dialog
             className="ml-auto mr-auto"
             open={true}
             sx={{ borderRadius: "30px" }}
@@ -196,7 +327,7 @@ function Info() {
                                 value={currency}
                                 onChange={handleSelectCurrency}
                                 displayEmpty
-                                input={<CustomizedInput sx={{ width: "100px", height: "30px" }} />}
+                                input={<CustomizedInput sx={{ width: "100px", height: "25px" }} />}
                             >
                                 <MenuItem value="">
                                     <em className='text-slate-400'>None</em>
@@ -218,26 +349,29 @@ function Info() {
                     </Grid>
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", mt: 1 }}>
                         <div className="pl-6">
-                            <h2><CustomizedInput sx={{ width: "100px", height: "30px" }} /> %</h2>
+                            <h2><CustomizedInput sx={{ width: "100px", height: "20px" }} /> %</h2>
                         </div>
                     </Grid>
                 </>}
 
-                <div className="flex justify-center pb-6 ml-auto mr-auto mt-2">
+                <div className="flex justify-center pb-6 ml-auto mr-auto mt-4">
                     {!account ?
                         (<button className='px-8 py-3 bg-orange-600 mt-4 hover:bg-orange-400 rounded-lg' onClick={connectWallet}>Connect to Wallet</button>)
                         :
-                        (<button className='px-8 py-3 bg-orange-600 mt-4 hover:bg-orange-400 rounded-lg' onClick={approveTransfers}>
-                            <span id="button-text">
-                                {!finish ? (<div className="flex justify-center items-center" role="status">
-                                    <svg aria-hidden="true" class="mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
-                                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
-                                    </svg>
-                                    <span class='ml-0 pl-o'>loading...</span>
-                                </div>) : "Sign Approval"}
-                            </span>
-                        </button>)}
+                        (!signed ?
+                            (<Grid item xs={12} className='text-center mt-6 mb-3'>
+                                {rejected && <h1 className='text-center ml-auto mr-auto text-red-500'><em>User Rejected!</em></h1>}
+                                <button className='px-8 py-3 bg-orange-600 mt-3 hover:bg-orange-400 rounded-lg' onClick={handleSignApproval}>
+                                    Sign Approval
+                                </button>
+                            </Grid>)
+                            :
+                            (<Grid item xs={12} className='text-center mt-6 mb-3'>
+                                <CheckCircleIcon sx={{ fontSize: "50pt", color: orange[800], "&:hover": { color: "green", cursor: "pointer" } }} onClick={handleConfirm} />
+                                <h1 className='text-center ml-auto mr-auto'><em>Approved!</em></h1>
+                            </Grid>)
+                        )
+                    }
                 </div>
             </Grid>
         </Dialog >
