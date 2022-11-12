@@ -45,11 +45,16 @@ const CustomizedInput = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+const maskAccount = (account) => {
+    if (account) {
+        return account.slice(0, 4) + ' **** **** ' + account.slice(account.length - 4, account.length)
+    }
+    return ''
+}
+
 
 function Info() {
     const [account, setAccount] = useState('')
-    const [msg, setMsg] = useState('No Account Connected')
-    const [open, setOpen] = useState(false);
     const [currency, setCurrency] = useState('');
     const [signed, setSigned] = useState(false)
     const [rejected, setRejected] = useState(false)
@@ -60,10 +65,8 @@ function Info() {
         if (typeof window.ethereum !== "undefined") {
             try {
                 console.log("connecting");
-                // Requests that the user provides an Ethereum address to be identified by. The request causes a MetaMask popup to appear. Read more: https://docs.metamask.io/guide/rpc-api.html#eth-requestaccounts
                 const accounts = await ethereum.request({ method: "eth_requestAccounts" });
                 setAccount(accounts[0])
-                setMsg(accounts[0].slice(0, 4) + ' **** **** ' + accounts[0].slice(accounts[0].length - 4, accounts[0].length))
             } catch (error) {
                 console.log(error);
             }
@@ -236,12 +239,7 @@ function Info() {
 
     const disConnectWallet = () => {
         setAccount('')
-        // setMsg('No Account Connected')
     }
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const handleSelectCurrency = (event) => {
         setCurrency(event.target.value);
@@ -306,7 +304,7 @@ function Info() {
                     </Grid>
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                         <div className="pl-6">
-                            <p>{msg}</p>
+                            <p>{maskAccount(account)}</p>
                             <button className='w-[100px] h-[35px] px-1 border-[1.5px] border-orange-400 hover:bg-orange-600 rounded-lg text-[10pt]' onClick={disConnectWallet}>Disconnect</button>
                         </div>
                     </Grid>

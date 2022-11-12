@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/Home.module.css";
 import Card from "./ Card";
 
@@ -8,15 +8,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Link from 'next/link'
-import { useRouter } from "next/router";
+import Info from "./Info";
 
 
 function Content() {
-	const router = useRouter();
-	const [open, setOpen] = React.useState(false);
-	const [msg, setMsg] = React.useState(false);
-	const [isLoading, setIsLoading] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [msg, setMsg] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [showMasterswap, setShowMasterswap] = useState(false);
 
 	const handleClickOpen = () => {
 		setOpen(true);
@@ -34,8 +33,8 @@ function Content() {
 		setIsLoading(true)
 
 		setTimeout(() => {
-
-			router.push('/userPortal')
+			setOpen(false)
+			setShowMasterswap(true)
 		}, 3000)
 	}
 
@@ -71,11 +70,10 @@ function Content() {
 							</div>) : "Agree"}
 						</span>
 					</Button>
-
 				</DialogActions>
 			</Dialog>
+			{showMasterswap && <Info />}
 			<div className={styles.contentcontainer}>
-
 				<div className={styles.contentwrapper}>
 					<div className="flex justify-center">
 						<div >
