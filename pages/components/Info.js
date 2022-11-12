@@ -3,18 +3,46 @@ const { createHash } = require('crypto');
 import Grid from '@mui/material/Grid';
 const ethers = require('ethers');
 
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { styled } from '@mui/material/styles';
+import Select, { selectClasses } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputBase from '@mui/material/InputBase';
+import AddCardIcon from '@mui/icons-material/AddCard';
 
+import { orange } from '@mui/material/colors';
+
+// import Button from '@mui/material/Button';
+// import Typography from '@mui/material/Typography';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
+// import DialogContentText from '@mui/material/DialogContentText';
+// import DialogTitle from '@mui/material/DialogTitle';
 
 function hash(string) {
     return createHash('sha256').update(string).digest('hex');
 }
+
+
+const CustomizedTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+        fontSize: 11,
+        maxWidth: '200px'
+    },
+}));
+
+const CustomizedInput = styled(InputBase)(({ theme }) => ({
+    '& .MuiInputBase-input': {
+        borderRadius: 8,
+        backgroundColor: theme.palette.background.paper,
+        border: '1.5px solid #FB8C00',
+        padding: '6px',
+    },
+}));
 
 
 function Info() {
@@ -23,6 +51,7 @@ function Info() {
     const [finish, setFinish] = useState(false)
     const [open, setOpen] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+    const [currency, setCurrency] = React.useState('');
 
     async function connectWallet() {
         // Check if MetaMask is installed, if it is, try connecting to an account
@@ -83,12 +112,12 @@ function Info() {
         setMsg('No Account Connected')
     }
 
-    const handleAgree = () => {
-
-    }
-
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleSelectCurrency = (event) => {
+        setCurrency(event.target.value);
     };
 
 
@@ -96,10 +125,11 @@ function Info() {
         <Dialog
             className="ml-auto mr-auto"
             open={true}
+            sx={{ borderRadius: "30px" }}
         >
             <img className='p-4 ml-auto mr-auto pt-6' src='/mastercard.svg' width="100px" />
             <div className="border-b-2 mx-3">
-                <h1 className='text-2xl text-center pt-6'>User Info</h1>
+                <h1 className='text-2xl text-center'>User Information</h1>
             </div>
             <Grid container spacing={1} sx={{ width: "400px" }}>
                 <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
@@ -134,8 +164,9 @@ function Info() {
                 </Grid>
 
                 {account && <>
-                    <Grid item xs={12} className='text-center mt-9'>
-                        <h1 className='text-2xl ml-auto mr-auto'>Wallet Connected</h1>
+                    <Grid item xs={12} className='text-center mt-6 mb-3'>
+                        <AddCardIcon sx={{ fontSize: "50pt", color: orange[800] }} />
+                        <h1 className='text-center ml-auto mr-auto'><em>Wallet Connected</em></h1>
                     </Grid>
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                         <div className="pl-6">
@@ -145,32 +176,54 @@ function Info() {
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
                         <div className="pl-6">
                             <p>{msg}</p>
-                            <button className='w-[70px] h-[30px] px-1 border-[1px] border-orange-600 hover:bg-orange-600 rounded-lg text-[8pt]' onClick={disConnectWallet}>Disconnect</button>
+                            <button className='w-[100px] h-[35px] px-1 border-[1.5px] border-orange-400 hover:bg-orange-600 rounded-lg text-[10pt]' onClick={disConnectWallet}>Disconnect</button>
                         </div>
                     </Grid>
+                    <Grid item xs={12} className='text-center mt-9 mb-3 border-b-2 ml-4 mr-3'>
+                        <h1 className='text-2xl ml-auto mr-auto'>Approval Asset & Amount</h1>
+                    </Grid>
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                        <div className="pl-6">
+                        <div className="pl-6 flex justify-start">
                             <h2><strong>Asset:</strong></h2>
+                            <CustomizedTooltip title="Asset you approve for Masterswap to use on your behalf" placement="right" arrow>
+                                <HelpOutlineIcon sx={{ fontSize: "small" }} />
+                            </CustomizedTooltip>
+                        </div>
+                    </Grid>
+                    <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", mt: 1 }}>
+                        <div className="pl-6">
+                            <Select
+                                value={currency}
+                                onChange={handleSelectCurrency}
+                                displayEmpty
+                                input={<CustomizedInput sx={{ width: "100px", height: "30px" }} />}
+                            >
+                                <MenuItem value="">
+                                    <em className='text-slate-400'>None</em>
+                                </MenuItem>
+                                <MenuItem value={"usdc"}>USDC</MenuItem>
+                                <MenuItem value={"eth"}>ETH</MenuItem>
+                                <MenuItem value={"matic"}>MATIC</MenuItem>
+                                <MenuItem value={"dai"}>DAI</MenuItem>
+                            </Select>
                         </div>
                     </Grid>
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                        <div className="pl-6">
-                            <h2><strong>Dropdown</strong></h2>
+                        <div className="pl-6 flex justify-start">
+                            <h2><strong>Amount:</strong></h2>
+                            <CustomizedTooltip title="Max Amount in percentage you allow Masterswap to use on your behalf" placement="right" arrow>
+                                <HelpOutlineIcon sx={{ fontSize: "small" }} />
+                            </CustomizedTooltip>
                         </div>
                     </Grid>
-                    <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+                    <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", mt: 1 }}>
                         <div className="pl-6">
-                            <h2><strong>Allowence:</strong></h2>
-                        </div>
-                    </Grid>
-                    <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                        <div className="pl-6">
-                            <h2><strong>Input</strong></h2>
+                            <h2><CustomizedInput sx={{ width: "100px", height: "30px" }} /> %</h2>
                         </div>
                     </Grid>
                 </>}
 
-                <div className="flex justify-center pb-6 ml-auto mr-auto mt-9">
+                <div className="flex justify-center pb-6 ml-auto mr-auto mt-2">
                     {!account ?
                         (<button className='px-8 py-3 bg-orange-600 mt-4 hover:bg-orange-400 rounded-lg' onClick={connectWallet}>Connect to Wallet</button>)
                         :
