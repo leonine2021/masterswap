@@ -13,13 +13,13 @@ function LeftNavbar(props) {
 					{props.menuList.map((d, i) => {
 						if (d == 'Dashboard') {
 							return (
-								<li className='text-orange-600' id={i}>
+								<li className='text-orange-600' key={i}>
 									<a href="#">{d}</a>
 								</li>
 							)
 						} else {
 							return (
-								<li id={i}>
+								<li key={i}>
 									<a href="#">{d}</a>
 								</li>
 							)

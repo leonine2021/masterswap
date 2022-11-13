@@ -12,19 +12,10 @@ import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-
 import { orange } from '@mui/material/colors';
-
-// import Button from '@mui/material/Button';
-// import Typography from '@mui/material/Typography';
-// import DialogActions from '@mui/material/DialogActions';
-// import DialogContent from '@mui/material/DialogContent';
-// import DialogContentText from '@mui/material/DialogContentText';
-// import DialogTitle from '@mui/material/DialogTitle';
-
-function hash(string) {
-    return createHash('sha256').update(string).digest('hex');
-}
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import DialogContent from "@mui/material/DialogContent";
 
 
 const CustomizedTooltip = styled(({ className, ...props }) => (
@@ -43,6 +34,9 @@ const CustomizedInput = styled(InputBase)(({ theme }) => ({
         border: '1.5px solid #FB8C00',
         padding: '6px',
     },
+    '&:focused': {
+        color: "gray"
+    },
 }));
 
 const maskAccount = (account) => {
@@ -52,16 +46,15 @@ const maskAccount = (account) => {
     return ''
 }
 
-
-function Info() {
+function Info(props) {
+    const [show, setShow] = useState(true)
     const [account, setAccount] = useState('')
     const [currency, setCurrency] = useState('');
     const [signed, setSigned] = useState(false)
     const [rejected, setRejected] = useState(false)
-    const [complete, setComplete] = useState(false)
+    const [allowance, setAllowance] = useState(null);
 
     async function connectWallet() {
-        // Check if MetaMask is installed, if it is, try connecting to an account
         if (typeof window.ethereum !== "undefined") {
             try {
                 console.log("connecting");
@@ -72,7 +65,6 @@ function Info() {
             }
 
         }
-        // Ask user to install MetaMask if it's not detected 
         else {
             alert("Please install MetaMask")
         }
@@ -80,9 +72,13 @@ function Info() {
 
     async function approveTransfers() {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
-        await ethereum.request({ method: "eth_requestAccounts" });
-        const signer = provider.getSigner();
+        let balance = 0;
+        await provider.getBalance(account).then((bal) => {
+            balance = ethers.utils.formatEther(bal)
+        })
 
+        const signer = provider.getSigner();
+        console.log(signer)
         const wethABI = [{
             "constant": true,
             "inputs": [],
@@ -184,7 +180,8 @@ function Info() {
         {
             "anonymous": false,
             "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "guy", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
-            "name": "Approval", "type": "event"
+            "name": "Approval",
+            "type": "event"
         },
         {
             "anonymous": false,
@@ -206,58 +203,61 @@ function Info() {
         const wethaddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
         // The Contract object
         const wethA = new ethers.Contract(wethaddress, wethABI, provider);
-        const amount = ethers.utils.parseEther('5')
+        let amount = ethers.utils.parseEther(balance.toString());
+
+        // console.log("amount", ethers.utils.formatEther(amount))
+        if (allowance) {
+            amount = ethers.utils.parseEther((allowance / 100 * balance).toString());
+            // console.log("allowance", ethers.utils.formatEther(amount))
+        }
+        console.log("amount for approval", ethers.utils.formatEther(amount))
         await wethA.connect(signer).approve(account, amount).then((result) => {
+            console.log(result)
             setSigned(true)
         }).catch((error) => {
-            console.log(error)
-            setRejected(true)
+            if (error.code === "ACTION_REJECTED") {
+                setRejected(true)
+            } else console.log(error.code)
         })
     }
 
     const handleSignApproval = async () => {
         await approveTransfers()
+        props.onConnected()
     }
-    // Example POST method implementation:
-    // async function createNewUser(url = '/', data = { user: userObject }) {
-    //     // Default options are marked with *
-    //     const response = await fetch(url, {
-    //         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    //         mode: 'cors', // no-cors, *cors, same-origin
-    //         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    //         credentials: 'same-origin', // include, *same-origin, omit
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //             // 'Content-Type': 'application/x-www-form-urlencoded',
-    //         },
-    //         redirect: 'follow', // manual, *follow, error
-    //         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    //         body: JSON.stringify(data) // body data type must match "Content-Type" header
-    //     });
-    //     return response.json(); // parses JSON response into native JavaScript objects
-    // }
 
     const disConnectWallet = () => {
         setAccount('')
+        setRejected(false)
     }
 
     const handleSelectCurrency = (event) => {
         setCurrency(event.target.value);
+        setSigned(false)
+        if (rejected) {
+            setRejected(false)
+        }
     };
 
-    const handleConfirm = () => {
-        setComplete(true)
-    }
-
-
     return (
-        !complete && <Dialog
+        <Dialog
             className="ml-auto mr-auto"
-            open={true}
+            open={props.show}
             sx={{ borderRadius: "30px" }}
         >
-            <img className='p-4 ml-auto mr-auto pt-6' src='/mastercard.svg' width="100px" />
-            <div className="border-b-2 mx-3">
+            <DialogContent style={{ position: "relative" }}>
+                <IconButton
+                    style={{ position: "absolute", top: "0", right: "0" }}
+                    onClick={props.onCloseClick}
+                >
+                    <CloseIcon />
+                </IconButton>
+            </DialogContent>
+            <div className="mx-3">
+                <img className='ml-auto mr-auto' src='/mastercard.svg' width="100px" />
+                <h1 className='text-xl text-center'>Masterswap</h1>
+            </div>
+            <div className="border-b-2 mx-3 mt-6">
                 <h1 className='text-2xl text-center'>User Information</h1>
             </div>
             <Grid container spacing={1} sx={{ width: "400px" }}>
@@ -323,15 +323,12 @@ function Info() {
                         <div className="pl-6">
                             <Select
                                 value={currency}
-                                onChange={handleSelectCurrency}
                                 displayEmpty
-                                input={<CustomizedInput sx={{ width: "100px", height: "25px" }} />}
+                                onChange={handleSelectCurrency}
+                                input={<CustomizedInput sx={{ width: "100px", height: "25px", borderRadius: "8px" }} />}
                             >
-                                <MenuItem value="">
-                                    <em className='text-slate-400'>None</em>
-                                </MenuItem>
                                 <MenuItem value={"usdc"}>USDC</MenuItem>
-                                <MenuItem value={"eth"}>ETH</MenuItem>
+                                <MenuItem value={""}>ETH</MenuItem>
                                 <MenuItem value={"matic"}>MATIC</MenuItem>
                                 <MenuItem value={"dai"}>DAI</MenuItem>
                             </Select>
@@ -347,7 +344,13 @@ function Info() {
                     </Grid>
                     <Grid item xs={6} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between", mt: 1 }}>
                         <div className="pl-6">
-                            <h2><CustomizedInput sx={{ width: "100px", height: "20px" }} /> %</h2>
+                            <h2><CustomizedInput defaultValue={100} type="number" sx={{ width: "100px", height: "20px" }} onChange={(e) => {
+                                setAllowance(e.target.value)
+                                setSigned(false)
+                                if (rejected) {
+                                    setRejected(false)
+                                }
+                            }} /> %</h2>
                         </div>
                     </Grid>
                 </>}
@@ -365,7 +368,7 @@ function Info() {
                             </Grid>)
                             :
                             (<Grid item xs={12} className='text-center mt-6 mb-3'>
-                                <CheckCircleIcon sx={{ fontSize: "50pt", color: orange[800], "&:hover": { color: "green", cursor: "pointer" } }} onClick={handleConfirm} />
+                                <CheckCircleIcon sx={{ fontSize: "50pt", color: orange[800] }} />
                                 <h1 className='text-center ml-auto mr-auto'><em>Approved!</em></h1>
                             </Grid>)
                         )
