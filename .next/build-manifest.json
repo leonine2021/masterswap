@@ -30,10 +30,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/bank.js"
     ],
-    "/userPortal": [
+    "/checkout": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/userPortal.js"
+      "static/chunks/pages/checkout.js"
     ]
   },
   "ampFirstPages": []
