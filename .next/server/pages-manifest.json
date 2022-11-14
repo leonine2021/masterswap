@@ -2,6 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/checkout": "pages/checkout.js",
-  "/bank": "pages/bank.js"
+  "/bank": "pages/bank.js",
+  "/history": "pages/history.js",
+  "/api/create-payment-intent": "pages/api/create-payment-intent.js",
+  "/checkout": "pages/checkout.js"
 }
