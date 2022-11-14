@@ -11,20 +11,18 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Link from 'next/link'
 import { useRouter } from "next/router";
 
-
 function Content() {
 	const router = useRouter();
 	const [open, setOpen] = React.useState(false);
 	const [msg, setMsg] = React.useState(false);
 	const [isLoading, setIsLoading] = React.useState(false);
 
-	const handleClickOpen = () => {
-		setOpen(true);
-	};
+	const [bigCard, setBigCard] = React.useState(false);
 
-	const handleClose = () => {
-		setOpen(false);
-	};
+	const handleClickBig = () => {
+		setBigCard(true);
+	}
+
 	const handleClick = () => {
 		setOpen(true);
 	}
@@ -40,7 +38,7 @@ function Content() {
 	}
 
 	return (
-		<>
+		<div className={styles.contentcontainer}>
 			<Dialog
 				open={open}
 				aria-labelledby="alert-dialog-title"
@@ -52,7 +50,8 @@ function Content() {
 				</DialogTitle>
 				<DialogContent>
 					<DialogContentText id="alert-dialog-description">
-						By accepting, you are authorizing Masterswap to connect to your card and hash your card number. This hash will be used to confirm your identity during future purchases. No personal information you provided is not directly stored in Masterswap.					</DialogContentText>
+						Let Masterswap connect your card with your crypto wallet. This means you are giving Masterswap access to your card information.
+					</DialogContentText>
 					<br></br>
 					{msg && <DialogContentText id="alert-dialog-description">
 						Directing to Masterswap, this may take a few seconds, please do not close the window.
@@ -60,7 +59,7 @@ function Content() {
 				</DialogContent>
 
 				<DialogActions>
-					<Button onClick={handleClose}>Disagree</Button>
+					<Button>Disagree</Button>
 					<Button autoFocus onClick={handleAgree}>
 						<span id="button-text">
 							{isLoading ? (<div className="flex justify-center items-center" role="status">
@@ -74,51 +73,27 @@ function Content() {
 
 				</DialogActions>
 			</Dialog>
-			<div className={styles.contentcontainer}>
-
-				<div className={styles.contentwrapper}>
-					<div className="flex justify-center">
-						<div >
-							<Card image={'/Card-1.svg'} handleClick={handleClick} />
-						</div>
-						<div className='bg-slate-100 w-[400px] ml-2 relative rounded-[30px]'>
-							<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
-							<div className="absolute bottom-12 left-6"> USD: $1234.56</div>
-							{/* <div className="absolute bottom-6 left-6">ETH:  ---</div> */}
-						</div>
-					</div>
-
-					<div className="flex justify-center">
-						<div >
-							<Card image={'/Card-2.svg'} handleClick={handleClick} />
-						</div>
-						<div className='bg-slate-100 w-[400px] ml-2 relative rounded-[30px]'>
-							<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
-							<div className="absolute bottom-12 left-6"> USD: $7890.12</div>
-							<div className="absolute bottom-6 left-6 text-purple-800">USDC: 4.567</div>
-							<div className="absolute bottom-0 left-6 text-purple-800">MATIC: 2.876</div>
-						</div>
-					</div>
-					<div className="flex justify-center">
-						<div >
-							<Card image={'/Card-3.svg'} handleClick={handleClick} />
-						</div>
-						<div className='bg-slate-100 w-[400px] ml-2  relative rounded-[30px]'>
-							<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
-							<div className="absolute bottom-12 left-6"> USD: $8765.43</div>
-							<div className="absolute bottom-6 left-6 text-purple-800">MATIC: 2.876</div>
-							<div className="absolute bottom-0 left-6 text-purple-800">DAI: 9.876</div>
-						</div>
+			<div className={styles.contentwrapper}>
+				<div className="flex justify-center">
+					<div >
+						<Card image={'/Card-1.svg'} handleClick={handleClick} handleClickBig={handleClickBig}  />
 					</div>
 				</div>
 
-				<div>
-
+				<div className="flex justify-center">
+					<div className="opacity-100 hover:opacity-50" onClick={handleClickBig} >
+						<img src={'/smallCard2.png'} />
+						 {/* <Card image={'/Card-2.svg'} handleClick={handleClick}/> */}
+					</div>
 				</div>
-
+				<div className="flex justify-center">
+					<div className="opacity-100 hover:opacity-50">
+						<img src={'/smallCard3.png'} />
+						{/* <Card image={'/Card-3.svg'} handleClick={handleClick} /> */}
+					</div>
+				</div>
 			</div>
-		</>
-
+		</div>
 	);
 }
 
