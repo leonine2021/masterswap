@@ -9,6 +9,19 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Info from "./Info";
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import TransactionHistory from "./TransactionHistory";
+
+const Item = styled(Paper)(({ theme }) => ({
+	backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+	...theme.typography.body2,
+	padding: theme.spacing(1),
+	textAlign: 'center',
+	color: theme.palette.text.secondary,
+}));
 
 
 function Content() {
@@ -17,6 +30,7 @@ function Content() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [showMasterswap, setShowMasterswap] = useState(false);
 	const [connected, setConnected] = useState(false)
+	const [bigCard, setBigCard] = React.useState(false);
 
 
 	const handleClick = () => {
@@ -51,7 +65,7 @@ function Content() {
 	}
 
 	return (
-		<>
+		<Grid container spacing={2} sx={{ mt: 3, pl: 30, pr: 5 }}>
 			<Dialog
 				open={open}
 				aria-labelledby="alert-dialog-title"
@@ -85,44 +99,45 @@ function Content() {
 				</DialogActions>
 			</Dialog>
 			<Info onCloseClick={onCloseClick} show={showMasterswap} onConnected={onConnected} />
-			<div className={styles.contentcontainer}>
-				<div className={styles.contentwrapper}>
-					<div className="flex justify-center">
-						<div >
-							<Card image={'/Card-1.svg'} handleClick={handleClick} />
+			<Grid item xs={4} sx={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+				<Item sx={{ height: "70%" }}>
+					<div className={styles.contentwrapper}>
+						<div className="flex justify-center z-2">
+							<div >
+								<Card image={'/Card-1.svg'} handleClick={handleClick} isBig={true} />
+							</div>
 						</div>
-						<div className='bg-slate-100 w-[400px] ml-2 relative rounded-[30px]'>
-							<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
-							<div className="absolute bottom-12 left-6"> USD: $1234.56</div>
-						</div>
-					</div>
 
-					<div className="flex justify-center">
-						<div >
-							<Card image={'/Card-2.svg'} handleClick={handleClick} />
+						<div className="flex justify-center mt-[-40px] z-0">
+							<div className="opacity-100 hover:opacity-60" >
+								<Card image={'/smallCard2.png'} isBig={false} />
+								{/* <img src={'/smallCard2.png'} /> */}
+
+							</div>
 						</div>
-						<div className='bg-slate-100 w-[400px] ml-2 relative rounded-[30px]'>
-							<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
-							<div className="absolute bottom-12 left-6"> USD: $7890.12</div>
-							<div className="absolute bottom-6 left-6 text-purple-800">USDC: 4.567</div>
-							<div className="absolute bottom-0 left-6 text-purple-800">MATIC: 2.876</div>
-						</div>
-					</div>
-					<div className="flex justify-center">
-						<div >
-							<Card image={'/Card-3.svg'} handleClick={handleClick} />
-						</div>
-						<div className='bg-slate-100 w-[400px] ml-2  relative rounded-[30px]'>
-							<div className="absolute bottom-20 left-6"><strong>Account Balance</strong></div>
-							<div className="absolute bottom-12 left-6"> USD: $8765.43</div>
-							<div className="absolute bottom-6 left-6 text-purple-800">MATIC: 2.876</div>
-							<div className="absolute bottom-0 left-6 text-purple-800">DAI: 9.876</div>
+						<div className="flex justify-center mt-[-40px] z-0">
+							<div className="opacity-100 hover:opacity-60">
+								<Card image={'/smallCard3.png'} isBig={false} />
+								{/* <img src={'/smallCard3.png'} /> */}
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-		</>
+				</Item>
+				<Item sx={{ height: "30%" }}>
+					<h1 className="text-xl mt-3 text-left pl-16">Account Balance(s)</h1>
+					<p>6575.00 USD</p>
+				</Item>
+			</Grid>
+			<Grid item xs={8} sx={{ ml: "auto", mr: "auto" }}>
+				<Item sx={{ ml: "auto", mr: "auto" }}>
+					<TransactionHistory />
+				</Item>
+			</Grid>
+		</Grid>
 	);
 }
 
 export default Content;
+
+
+{/*  */ }
