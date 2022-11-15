@@ -3,7 +3,7 @@
     width: 200px;
     height: 100%;
     background-color: #fff;
-    box-shadow: 3px 0px 6px 0px rgba(246, 246, 246, 0.75);
+    box-shadow: 3px 0px 6px 6px rgba(246, 246, 246, 0.75);
 
 }
 
@@ -97,6 +97,7 @@
     height: 70px;
     background-color: rgb(255, 255, 255);
     margin-left: 200px;
+    box-shadow: 3px 0px 6px 6px rgba(246, 246, 246, 0.75);
     /* z-index: -1; */
 
 }
