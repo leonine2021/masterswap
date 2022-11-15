@@ -75,7 +75,7 @@ export default function transactionHistory() {
   };
 
   return (
-    <Grid container spacing={2} sx={{ height: 700, padding: 3 }}>
+    <Grid container spacing={2} sx={{ height: 740, padding: 3 }}>
       <Grid item xs={12} sx={{ height: "40%" }}>
         <h1 className='text-xl text-left'>Total Balance Change</h1>
         <div className='flex justify-between'>
@@ -83,7 +83,7 @@ export default function transactionHistory() {
           <img src='/pie.png' className='w-[300px] p-6' />
         </div>
       </Grid>
-      <Grid item xs={12} sx={{ height: "60%", mt: 3 }}>
+      <Grid item xs={12} sx={{ height: "60%", mt: 2 }}>
         <div className='flex justify-between px-3'>
           <div className='text-xl text-center'>
             Recent Activities
@@ -99,7 +99,7 @@ export default function transactionHistory() {
           rowsPerPageOptions={[5]}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
-          sx={{ border: "none", padding: 1 }}
+          sx={{ border: "none", padding: 2 }}
         />
       </Grid>
     </Grid>
