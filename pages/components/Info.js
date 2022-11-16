@@ -131,7 +131,7 @@ function Info(props) {
             </DialogContent>
             <div className="mx-3">
                 <img className='ml-auto mr-auto' src='/mastercard.svg' width="100px" />
-                <h1 className='text-xl text-center'>Masterswap</h1>
+                <h1 className='text-xl text-center'>MasterSwap</h1>
             </div>
             <div className="border-b-2 mx-3 mt-6">
                 <h1 className='text-2xl text-center'>User Information</h1>

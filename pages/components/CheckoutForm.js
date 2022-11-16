@@ -30,7 +30,7 @@ export default function CheckoutForm() {
     const elements = useElements();
     const [message, setMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [account, setAccount] = useState(null);
+    // const [account, setAccount] = useState(null);
 
     useEffect(() => {
         if (!stripe) {
@@ -73,297 +73,301 @@ export default function CheckoutForm() {
                 alert("Please install MetaMask")
             }
         }
-        connectWallet();
+        // connectWallet();
     }, [stripe]);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) return;
-        // setIsLoading(true);
+        setIsLoading(true);
+
+        setTimeout(() => {
+            router.push('/success')
+            setIsLoading(false)
+        }, 3000)
 
         // await trySwap()
-        // setIsLoading(false);
     };
 
-    const trySwap = async () => {
+    // const trySwap = async () => {
 
-        // if (!account) await connectWallet();
+    //     // if (!account) await connectWallet();
 
-        // let takerAddress = account
-        console.log("takerAddress", '0x1f472D2550744f20C13Ac525fa365Ad88317078A')
-        const swapQuoteJson = await getQuote('0x1f472D2550744f20C13Ac525fa365Ad88317078A')
-        const fromTokenAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' //weth
-        const erc20abi = [
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "name",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_spender",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "approve",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "totalSupply",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_from",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_to",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "transferFrom",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "decimals",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint8"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_owner",
-                        "type": "address"
-                    }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                    {
-                        "name": "balance",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [],
-                "name": "symbol",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "string"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "_to",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "transfer",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "bool"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "_owner",
-                        "type": "address"
-                    },
-                    {
-                        "name": "_spender",
-                        "type": "address"
-                    }
-                ],
-                "name": "allowance",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "payable": true,
-                "stateMutability": "payable",
-                "type": "fallback"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "name": "owner",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "name": "spender",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Approval",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": true,
-                        "name": "to",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "name": "value",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Transfer",
-                "type": "event"
-            }
-        ]
+    //     // let takerAddress = account
+    //     console.log("takerAddress", '0x1f472D2550744f20C13Ac525fa365Ad88317078A')
+    //     const swapQuoteJson = await getQuote('0x1f472D2550744f20C13Ac525fa365Ad88317078A')
+    //     const fromTokenAddress = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' //weth
+    //     const erc20abi = [
+    //         {
+    //             "constant": true,
+    //             "inputs": [],
+    //             "name": "name",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "string"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "view",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": false,
+    //             "inputs": [
+    //                 {
+    //                     "name": "_spender",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "name": "_value",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "name": "approve",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "bool"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "nonpayable",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": true,
+    //             "inputs": [],
+    //             "name": "totalSupply",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "view",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": false,
+    //             "inputs": [
+    //                 {
+    //                     "name": "_from",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "name": "_to",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "name": "_value",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "name": "transferFrom",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "bool"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "nonpayable",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": true,
+    //             "inputs": [],
+    //             "name": "decimals",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "uint8"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "view",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": true,
+    //             "inputs": [
+    //                 {
+    //                     "name": "_owner",
+    //                     "type": "address"
+    //                 }
+    //             ],
+    //             "name": "balanceOf",
+    //             "outputs": [
+    //                 {
+    //                     "name": "balance",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "view",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": true,
+    //             "inputs": [],
+    //             "name": "symbol",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "string"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "view",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": false,
+    //             "inputs": [
+    //                 {
+    //                     "name": "_to",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "name": "_value",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "name": "transfer",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "bool"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "nonpayable",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "constant": true,
+    //             "inputs": [
+    //                 {
+    //                     "name": "_owner",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "name": "_spender",
+    //                     "type": "address"
+    //                 }
+    //             ],
+    //             "name": "allowance",
+    //             "outputs": [
+    //                 {
+    //                     "name": "",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "payable": false,
+    //             "stateMutability": "view",
+    //             "type": "function"
+    //         },
+    //         {
+    //             "payable": true,
+    //             "stateMutability": "payable",
+    //             "type": "fallback"
+    //         },
+    //         {
+    //             "anonymous": false,
+    //             "inputs": [
+    //                 {
+    //                     "indexed": true,
+    //                     "name": "owner",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "indexed": true,
+    //                     "name": "spender",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "indexed": false,
+    //                     "name": "value",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "name": "Approval",
+    //             "type": "event"
+    //         },
+    //         {
+    //             "anonymous": false,
+    //             "inputs": [
+    //                 {
+    //                     "indexed": true,
+    //                     "name": "from",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "indexed": true,
+    //                     "name": "to",
+    //                     "type": "address"
+    //                 },
+    //                 {
+    //                     "indexed": false,
+    //                     "name": "value",
+    //                     "type": "uint256"
+    //                 }
+    //             ],
+    //             "name": "Transfer",
+    //             "type": "event"
+    //         }
+    //     ]
 
-        // set allowance
-        const web3 = new Web3(Web3.givenProvider);
-        const ERC20TokenContract = new web3.eth.Contract(erc20abi, fromTokenAddress);
-        console.log('setup ERCTokenContract', ERC20TokenContract)
+    //     // set allowance
+    //     const web3 = new Web3(Web3.givenProvider);
+    //     const ERC20TokenContract = new web3.eth.Contract(erc20abi, fromTokenAddress);
+    //     console.log('setup ERCTokenContract', ERC20TokenContract)
 
-        const maxApproval = new BigNumber(2).pow(256).minus(1);
-        console.log("approval amount: ", maxApproval);
+    //     const maxApproval = new BigNumber(2).pow(256).minus(1);
+    //     console.log("approval amount: ", maxApproval);
 
-        const tx = await ERC20TokenContract.methods.approve(
-            swapQuoteJson.allowanceTarget,
-            maxApproval,
-        )
-            .send({ from: '0x1f472D2550744f20C13Ac525fa365Ad88317078A' })
-            .then(tx => {
-                console.log("tx: ", tx)
-                setIsLoading(false)
-                swapQuoteJson.from = '0x1f472D2550744f20C13Ac525fa365Ad88317078A'
-                console.log(swapQuoteJson)
+    //     const tx = await ERC20TokenContract.methods.approve(
+    //         swapQuoteJson.allowanceTarget,
+    //         maxApproval,
+    //     )
+    //         .send({ from: '0x1f472D2550744f20C13Ac525fa365Ad88317078A' })
+    //         .then(tx => {
+    //             console.log("tx: ", tx)
+    //             setIsLoading(false)
+    //             swapQuoteJson.from = '0x1f472D2550744f20C13Ac525fa365Ad88317078A'
+    //             console.log(swapQuoteJson)
 
-            });
+    //         });
 
 
-        //perform the swap
-        // const receipt = await web3.eth.sendTransaction(swapQuoteJson);
-        // console.log("receipt", receipt);
+    //     //perform the swap
+    //     // const receipt = await web3.eth.sendTransaction(swapQuoteJson);
+    //     // console.log("receipt", receipt);
 
-    }
+    // }
 
-    const getQuote = async (account) => {
-        console.log("getting quote from 0x");
+    // const getQuote = async (account) => {
+    //     console.log("getting quote from 0x");
 
-        let amount = Number(0.001 * 10 ** 18);
-        console.log(amount)
-        const params = {
-            sellToken: 'WETH',
-            buyToken: 'USDC',
-            sellAmount: amount,
-            // takerAddress: account
-        }
+    //     let amount = Number(0.001 * 10 ** 18);
+    //     console.log(amount)
+    //     const params = {
+    //         sellToken: 'WETH',
+    //         buyToken: 'USDC',
+    //         sellAmount: amount,
+    //         // takerAddress: account
+    //     }
 
-        const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`);
+    //     const response = await fetch(`https://api.0x.org/swap/v1/quote?${qs.stringify(params)}`);
 
-        let swapQuoteJSON = await response.json();
-        console.log("Quote: ", swapQuoteJSON);
+    //     let swapQuoteJSON = await response.json();
+    //     console.log("Quote: ", swapQuoteJSON);
 
-        return swapQuoteJSON
-    }
+    //     return swapQuoteJSON
+    // }
 
     return (
         <div className='flex px-10 pt-10 justify-center  items-center'>

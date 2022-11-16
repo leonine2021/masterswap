@@ -125,11 +125,11 @@ function Content() {
 				</Item>
 				<Item sx={{ height: "30%" }}>
 					<h1 className="text-xl mt-3 text-left pl-16">Account Balance(s)</h1>
-					<div className="flex justify-between w-[30%] mt-3 text-left pl-16">
+					<div className="flex justify-between w-[50%] mt-3 text-left pl-16">
 						<p>6575.00</p>
 						<p>USD</p>
 					</div>
-					<div className="flex justify-between w-[30%] mt-3 text-left pl-16">
+					<div className="flex justify-between w-[50%] mt-3 text-left pl-16">
 						<p>12.34</p>
 						<p>ETH</p>
 					</div>

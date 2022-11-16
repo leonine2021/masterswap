@@ -79,8 +79,8 @@ export default function transactionHistory() {
       <Grid item xs={12} sx={{ height: "40%" }}>
         <h1 className='text-xl text-left'>Total Balance Change</h1>
         <div className='flex justify-between'>
-          <img src='/chart.png' className='w-[700px] p-6' />
-          <img src='/pie.png' className='w-[300px] p-6' />
+          <img src='/chart.png' className='w-[70%] p-6' />
+          <img src='/pie.png' className='w-[30%] p-6' />
         </div>
       </Grid>
       <Grid item xs={12} sx={{ height: "60%", mt: 2 }}>
@@ -105,19 +105,3 @@ export default function transactionHistory() {
     </Grid>
   );
 }
-
-
-{/* <div className=''>
-        <h1 className='text-slate-600 mt-3'>Select an Account</h1>
-        <Select
-          value={currency}
-          onChange={handleChange}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-          sx={{ width: "300px" }}
-        >
-          <MenuItem value=""> <img src={'/Card-1.svg'} /> </MenuItem>
-          <MenuItem value={"eth"}><img src={'/Card-2.svg'} /></MenuItem>
-          <MenuItem value={"matic"}><img src={'/Card-3.svg'} /></MenuItem>
-        </Select>
-      </div> */}
